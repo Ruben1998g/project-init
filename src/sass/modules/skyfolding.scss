@@ -1,11 +1,10 @@
-
 @font-face {
-    font-family: "Helvetica Neue";
+    font-family: "Roboto";
     font-style: normal;
     font-weight: 400;
-    src: local("Helvetica Neue Regular"),
-         url("../fonts/namethe.woff2") format("woff2"),
-         url("../fonts/namethe.woff") format("woff");
+    src:
+         url("../fonts/Roboto.woff2") format("woff2"),
+         url("../fonts/Roboto.woff") format("woff");
 }
 
   
@@ -26,7 +25,7 @@ p{
 
 body,
 html{
-    font-family:'namethe', 'snas-serif';
+    font-family:'Roboto', 'sans-serif';
     font-style: normal;
     font-weight: 400;
 }

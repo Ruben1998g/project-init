@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "Project",
   "version": "1.0.0",
   "description": "",
   "main": "gulpfile.js",
@@ -29,7 +29,6 @@
     "del": "^5.1.0",
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
-    "gulp-connect": "^5.7.0",
     "gulp-csso": "^4.0.1",
     "gulp-imagemin": "^7.1.0",
     "gulp-plumber": "^1.2.1",
@@ -43,8 +42,7 @@
     "gulp-pug": "^5.0.0",
     "gulp-sass": "^5.0.0",
     "node-sass": "^6.0.1",
-    "sass": "^1.37.0",
-    "swiper": "^6.8.1"
+    "sass": "^1.37.0"
   },
   "homepage": ""
 }
