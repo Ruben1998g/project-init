@@ -39,15 +39,27 @@ gulp.task("browser-sync", function(done){
 done()
 });
 
-
-//Следит за папкой src/sass и обрабатывает sass файлы
-gulp.task('style', function(done){
+//Следит за папкой src/sass/*.scss и обрабатывает sass файлы
+gulp.task('style-main', function(done){
     gulp.src('src/sass/*.scss')
     .pipe(plumber())
     .pipe(sass())
     .pipe(gulp.dest('src/build/css'))
     done();
 });
+
+
+//Следит за папкой src/sass/libs/.css и обрабатывает css файлы
+gulp.task('style-libs', function(done){
+    gulp.src('src/sass/libs/*.css')
+    .pipe(gulp.dest('src/build/css/libs'))
+    done();
+});
+
+
+
+//Следит за папкой src/sass и обрабатывает sass/css файлы
+gulp.task('style', gulp.series('style-main', 'style-libs'));
 
 //Следит за папкой src/pug и обрабатывает sass файлы
 gulp.task('pugs', function(done){
@@ -59,8 +71,8 @@ gulp.task('pugs', function(done){
     done();
 });
 
-//Следит за папкой src/js и обрабатывает sass файлы
-gulp.task('js', function(done){
+//Следит за папкой src/js/*.js и обрабатывает js файлы
+gulp.task('js-main', function(done){
     gulp.src('src/js/*.js')
     .pipe(plumber())
     .pipe(babel({
@@ -72,6 +84,17 @@ gulp.task('js', function(done){
     .pipe(gulp.dest('src/build/js'))
     done();
 });
+
+//Следит за папкой src/js/libs/*.js и обрабатывает js файлы
+gulp.task('js-libs', function(done){
+    gulp.src('src/js/libs/*.js')
+    .pipe(gulp.dest('src/build/js/libs'))
+    done();
+});
+
+
+//Следит за папкой src/js и обрабатывает js файлы
+gulp.task('js', gulp.series('js-main', 'js-libs'));
 
 //Следит за папкой src/fonts и обрабатывает шрифты
 gulp.task('fonts', function(done){
@@ -110,6 +133,10 @@ gulp.task("sass", function(done){
     .pipe(minify())
     .pipe(rename("style.css"))
     .pipe(gulp.dest("build/css"))
+
+    gulp.src('src/build/css/libs/*.css')
+    .pipe(gulp.dest("build/css/libs"))
+
     done();
 });
 
@@ -120,16 +147,17 @@ gulp.task("html", function(){
 })
 
 //Во время сборки копирует и обрабатывает js
-gulp.task("scripts", function(){
-    return gulp.src([
-        "src/build/js/**/*"
-    ]
-    )
+gulp.task("scripts", function(done){
+    gulp.src(["src/build/js/script.js"])
     .pipe(babel({
         presets: ["@babel/preset-env"]
     }))
-
     .pipe(gulp.dest("build/js"))
+
+    gulp.src('src/build/js/libs/*.js')
+    .pipe(gulp.dest("build/js/libs"))
+
+    done();
 })
 
 //Во время сборки копирует шрифты
@@ -165,6 +193,12 @@ gulp.task("svg-to-build", function(){
     .pipe(gulp.dest("build/img"))
 })
 
+//Во время сборки копирует favicon
+gulp.task("favicon", function(){
+    return gulp.src("src/favicon.ico", { allowEmpty: true })
+    .pipe(gulp.dest("build"))
+})
+
 //Сборка проекта
 gulp.task("build", gulp.series(
     "clean",
@@ -174,5 +208,6 @@ gulp.task("build", gulp.series(
     "fonts-to-build",
     "images",
     //"webp",
-    "svg-to-build"
+    "svg-to-build",
+    "favicon"
 ));
